@@ -1,11 +1,12 @@
 using UnityEngine;
-using Core;
 
 namespace UI
 {
     public class MainMenuController : MonoBehaviour
     {
-        public void OnPlayButtonPressed() => EventBus.Publish(new LoadGameRequestedEvent());
+        [SerializeField] private MainMenuTransitionController transitionController;
+
+        public void OnPlayButtonPressed() => transitionController.OnPlayPressed();
         public void OnQuitButtonPressed() => Application.Quit();
     }
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
-using Core;
 
-namespace Gameplay
+namespace Core
 {
     public class PauseController : MonoBehaviour
     {
@@ -13,7 +12,7 @@ namespace Gameplay
             inputReader = GetComponent<IInputReader>() ?? GetComponentInChildren<IInputReader>();
             if (inputReader == null)
             {
-                Debug.LogError($"{name}: No IInputReader founded.", this);
+                Debug.LogError($"{name}: no IInputReader founded.", this);
                 enabled = false;
                 return;
             }

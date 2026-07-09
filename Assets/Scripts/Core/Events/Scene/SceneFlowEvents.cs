@@ -1,6 +1,10 @@
 namespace Core
 {
-    public readonly struct LoadGameRequestedEvent : IGameEvent { }
+    public readonly struct LoadGameRequestedEvent : IGameEvent
+    {
+        public readonly int SlotIndex;
+        public LoadGameRequestedEvent(int slotIndex) => SlotIndex = slotIndex;
+    }
 
     public readonly struct ReturnToMainMenuRequestedEvent : IGameEvent { }
 

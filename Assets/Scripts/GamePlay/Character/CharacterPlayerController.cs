@@ -12,7 +12,7 @@ namespace GamePlay
             inputReader = GetComponent<IInputReader>() ?? GetComponentInChildren<IInputReader>();
             if (inputReader == null)
             {
-                Debug.LogError($"{name}: nessun IInputReader trovato.", this);
+                Debug.LogError($"{name}: no IInputReader founded.", this);
                 enabled = false;
                 return;
             }
@@ -33,7 +33,7 @@ namespace GamePlay
         {
             base.PostProcessControl(c);
             if (c != null)
-                EventBus.Publish(new PlayerControlledEvent(c.transform));
+                EventBus.Publish(new PlayerControlledEvent(c.transform, GameplayMode.Surface));
         }
     }
 }

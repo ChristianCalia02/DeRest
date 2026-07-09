@@ -12,5 +12,6 @@ namespace Core
         event Action OnInteract;
         event Action OnPause;
         event Action OnDebug;
+        event Action OnJump;
     }
 }

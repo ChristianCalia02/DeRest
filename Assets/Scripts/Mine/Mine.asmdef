@@ -1,0 +1,16 @@
+{
+    "name": "Mine",
+    "rootNamespace": "Mine",
+    "references": [
+        "GUID:4bcc1f02d9472e046a41ef3615eea5c6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -5,7 +5,6 @@ using Core;
 
 namespace Flow
 {
-
     public class SceneLoader : MonoBehaviour
     {
         private string currentSceneName = SceneNames.MainMenu;
@@ -23,7 +22,7 @@ namespace Flow
         }
 
         private void OnLoadGame(LoadGameRequestedEvent e) =>
-            StartCoroutine(SwapScene(SceneNames.Gameplay));
+            StartCoroutine(SwapScene(SceneNames.Surface));
 
         private void OnReturnToMenu(ReturnToMainMenuRequestedEvent e) =>
             StartCoroutine(SwapScene(SceneNames.MainMenu));
@@ -31,13 +30,12 @@ namespace Flow
         private IEnumerator SwapScene(string targetScene)
         {
             string previousScene = currentSceneName;
-
             Time.timeScale = 1f;
 
             var loadOp = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
             if (loadOp == null)
             {
-                Debug.LogError($"Impossible to load: '{targetScene}'---> check in Build Settings.");
+                Debug.LogError($"Can't load '{targetScene}': check in Build Settings.");
                 yield break;
             }
             yield return loadOp;
@@ -47,6 +45,9 @@ namespace Flow
 
             currentSceneName = targetScene;
             EventBus.Publish(new SceneTransitionCompletedEvent(targetScene));
+
+            if (targetScene == SceneNames.Surface)
+                EventBus.Publish(new GameplayModeChangedEvent(GameplayMode.Surface));
         }
     }
 }

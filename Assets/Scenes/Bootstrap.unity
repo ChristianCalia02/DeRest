@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 2144540168}
   - component: {fileID: 2144540169}
   - component: {fileID: 2144540170}
+  - component: {fileID: 2144540171}
   m_Layer: 0
   m_Name: GameFlow
   m_TagString: Untagged
@@ -176,6 +177,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058472888d1c09049982aa1c656ac79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Flow::Flow.SceneLoader
+--- !u!114 &2144540171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144540167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65750567f01224f4d8f5e3b08d913285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Flow::Flow.MineTransitionController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

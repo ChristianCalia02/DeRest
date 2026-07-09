@@ -4,6 +4,7 @@ namespace Flow
     {
         public const string UI = "UI";
         public const string MainMenu = "MainMenu";
-        public const string Gameplay = "Game";
+        public const string Surface = "Gameplay_Surface";
+        public const string Mine = "Gameplay_Mine";
     }
 }

@@ -32,8 +32,18 @@ namespace Flow
         {
             string previousScene = currentSceneName;
 
-            yield return SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
-            yield return SceneManager.UnloadSceneAsync(previousScene);
+            Time.timeScale = 1f;
+
+            var loadOp = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
+            if (loadOp == null)
+            {
+                Debug.LogError($"Impossible to load: '{targetScene}'---> check in Build Settings.");
+                yield break;
+            }
+            yield return loadOp;
+
+            var unloadOp = SceneManager.UnloadSceneAsync(previousScene);
+            if (unloadOp != null) yield return unloadOp;
 
             currentSceneName = targetScene;
             EventBus.Publish(new SceneTransitionCompletedEvent(targetScene));

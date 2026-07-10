@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Core;
 
 namespace Flow
 {
@@ -8,6 +9,8 @@ namespace Flow
     {
         private IEnumerator Start()
         {
+            SaveSystem.Initialize();
+
             yield return SceneManager.LoadSceneAsync(SceneNames.UI, LoadSceneMode.Additive);
             yield return SceneManager.LoadSceneAsync(SceneNames.MainMenu, LoadSceneMode.Additive);
         }

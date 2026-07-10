@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Bootstrap.unity
     guid: 13c10f7d007f38844b23b65e8026406a
   - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: de5dff38c81be7f49b33e9566c934f96
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 007219c359020e745ac14e543985fe0a
+  - enabled: 1
+    path: Assets/Scenes/Gameplay_Surface.unity
+    guid: de5dff38c81be7f49b33e9566c934f96
+  - enabled: 1
+    path: Assets/Scenes/Gameplay_Mine.unity
+    guid: 5a171c6f523c60c41b3489643d7ae8c4
   - enabled: 1
     path: Assets/Scenes/UI.unity
     guid: e1b09d714511a1146a6fb6d019f33ec1

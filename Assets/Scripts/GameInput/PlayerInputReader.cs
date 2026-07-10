@@ -1,7 +1,7 @@
+using Core;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Core;
 
 namespace GameInput
 {
@@ -12,6 +12,7 @@ namespace GameInput
         [SerializeField] private InputActionReference interact;
         [SerializeField] private InputActionReference pause;
         [SerializeField] private InputActionReference debug;
+        [SerializeField] private InputActionReference jump;
 
         public Vector2 Move { get; private set; }
         public Vector2 MousePosition { get; private set; }
@@ -20,6 +21,7 @@ namespace GameInput
         public event Action OnInteract;
         public event Action OnPause;
         public event Action OnDebug;
+        public event Action OnJump;
 
         private void OnEnable()
         {
@@ -27,22 +29,20 @@ namespace GameInput
             interact.action.Enable();
             pause.action.Enable();
             debug.action.Enable();
+            jump.action.Enable();
 
             interact.action.performed += HandleInteract;
             pause.action.performed += HandlePause;
             debug.action.performed += HandleDebug;
+            jump.action.performed += HandleJump;
         }
 
         private void OnDisable()
         {
-            move.action.Disable();
-            interact.action.Disable();
-            pause.action.Disable();
-            debug.action.Disable();
-
             interact.action.performed -= HandleInteract;
             pause.action.performed -= HandlePause;
             debug.action.performed -= HandleDebug;
+            jump.action.performed -= HandleJump;
         }
 
         private void Update()
@@ -54,11 +54,8 @@ namespace GameInput
         }
 
         private void HandleInteract(InputAction.CallbackContext ctx) => OnInteract?.Invoke();
-        private void HandlePause(InputAction.CallbackContext ctx) 
-        { 
-            OnPause?.Invoke();
-            //EventBus.Publish(new PauseStateChangedEvent());
-        }
+        private void HandlePause(InputAction.CallbackContext ctx) => OnPause?.Invoke();
         private void HandleDebug(InputAction.CallbackContext ctx) => OnDebug?.Invoke();
+        private void HandleJump(InputAction.CallbackContext ctx) => OnJump?.Invoke();
     }
 }

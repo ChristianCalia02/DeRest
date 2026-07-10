@@ -6,6 +6,7 @@ namespace Core
     {
         private IInputReader inputReader;
         private bool isPaused;
+        private bool isSettingsOpen;
 
         private void Start()
         {
@@ -19,8 +20,19 @@ namespace Core
             inputReader.OnPause += TogglePause;
         }
 
-        private void OnEnable() => EventBus.Subscribe<ResumeGameRequestedEvent>(OnResumeRequested);
-        private void OnDisable() => EventBus.Unsubscribe<ResumeGameRequestedEvent>(OnResumeRequested);
+        private void OnEnable()
+        {
+            EventBus.Subscribe<ResumeGameRequestedEvent>(OnResumeRequested);
+            EventBus.Subscribe<OpenSettingsRequestedEvent>(OnSettingsOpened);
+            EventBus.Subscribe<CloseSettingsRequestedEvent>(OnSettingsClosed);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ResumeGameRequestedEvent>(OnResumeRequested);
+            EventBus.Unsubscribe<OpenSettingsRequestedEvent>(OnSettingsOpened);
+            EventBus.Unsubscribe<CloseSettingsRequestedEvent>(OnSettingsClosed);
+        }
 
         private void OnDestroy()
         {
@@ -28,7 +40,20 @@ namespace Core
                 inputReader.OnPause -= TogglePause;
         }
 
-        private void TogglePause() => SetPaused(!isPaused);
+        private void OnSettingsOpened(OpenSettingsRequestedEvent e) => isSettingsOpen = true;
+        private void OnSettingsClosed(CloseSettingsRequestedEvent e) => isSettingsOpen = false;
+
+        private void TogglePause()
+        {
+            if (isSettingsOpen)
+            {
+                EventBus.Publish(new CloseSettingsRequestedEvent());
+                return;
+            }
+
+            SetPaused(!isPaused);
+        }
+
         private void OnResumeRequested(ResumeGameRequestedEvent e) => SetPaused(false);
 
         private void SetPaused(bool paused)

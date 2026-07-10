@@ -88,6 +88,12 @@ namespace Core
             if (ActiveGameData == null || currentSlotIndex < 0) return;
             SaveToFile(SaveSystemConfiguration.GetGameDataPath(currentSlotIndex), ActiveGameData);
         }
+
+        public static System.DateTime? GetSlotLastWriteTime(int slotIndex)
+        {
+            string path = SaveSystemConfiguration.GetGameDataPath(slotIndex);
+            return File.Exists(path) ? File.GetLastWriteTime(path) : (System.DateTime?)null;
+        }
         #endregion
 
         #region Eventi

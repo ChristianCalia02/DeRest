@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Core;
 
 namespace UI
 {
@@ -20,18 +21,55 @@ namespace UI
         [SerializeField] private AnimationCurve expandCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
         private Vector3 playButtonOriginalScale;
+        private int playButtonOriginalSiblingIndex;
+        private bool isSettingsOpen;
+        private bool isInSlotsView;
 
         private void Awake()
         {
             playButtonOriginalScale = playButton.localScale;
+            playButtonOriginalSiblingIndex = playButton.GetSiblingIndex();
 
             saveSlotsPanel.localScale = Vector3.zero;
             SetGroupVisible(saveSlotsGroup, false);
         }
 
+        private void OnEnable()
+        {
+            EventBus.Subscribe<BackRequestedEvent>(OnBackRequested);
+            EventBus.Subscribe<OpenSettingsRequestedEvent>(OnSettingsOpened);
+            EventBus.Subscribe<CloseSettingsRequestedEvent>(OnSettingsClosed);
+        }
 
-        public void OnPlayPressed() => StartCoroutine(EnterPlayButtonRoutine());
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<BackRequestedEvent>(OnBackRequested);
+            EventBus.Unsubscribe<OpenSettingsRequestedEvent>(OnSettingsOpened);
+            EventBus.Unsubscribe<CloseSettingsRequestedEvent>(OnSettingsClosed);
+        }
 
+        private void OnSettingsOpened(OpenSettingsRequestedEvent e) => isSettingsOpen = true;
+        private void OnSettingsClosed(CloseSettingsRequestedEvent e) => isSettingsOpen = false;
+
+        private void OnBackRequested(BackRequestedEvent e)
+        {
+            if (isSettingsOpen)
+            {
+                EventBus.Publish(new CloseSettingsRequestedEvent());
+                return;
+            }
+
+            if (isInSlotsView)
+                OnBackPressed();
+        }
+
+        public void OnPlayPressed()
+        {
+            foreach (var card in saveSlotsPanel.GetComponentsInChildren<SaveSlotCard>(true))
+                card.Refresh();
+
+            StartCoroutine(EnterPlayButtonRoutine());
+        }
 
         public void OnBackPressed() => StartCoroutine(ExitToMainMenuRoutine());
 
@@ -40,7 +78,7 @@ namespace UI
             SetGroupVisible(mainButtonsGroup, false);
             yield return Fade(mainButtonsGroup, 1f, 0f, expandDuration * 0.6f);
 
-            playButton.SetAsLastSibling(); 
+            playButton.SetAsLastSibling();
             yield return Scale(playButton, playButtonOriginalScale,
                                 playButtonOriginalScale * expandTargetScale, expandDuration, expandCurve);
 
@@ -48,6 +86,8 @@ namespace UI
             SetGroupVisible(saveSlotsGroup, true);
             yield return Fade(saveSlotsGroup, 0f, 1f, revealDuration);
             yield return Scale(saveSlotsPanel, Vector3.one * 0.8f, Vector3.one, revealDuration, null);
+
+            isInSlotsView = true;
         }
 
         private IEnumerator ExitToMainMenuRoutine()
@@ -57,9 +97,12 @@ namespace UI
             saveSlotsPanel.localScale = Vector3.zero;
 
             playButton.localScale = playButtonOriginalScale;
+            playButton.SetSiblingIndex(playButtonOriginalSiblingIndex);
 
             SetGroupVisible(mainButtonsGroup, true);
             yield return Fade(mainButtonsGroup, 0f, 1f, expandDuration * 0.6f);
+
+            isInSlotsView = false;
         }
 
         private static void SetGroupVisible(CanvasGroup group, bool visible)

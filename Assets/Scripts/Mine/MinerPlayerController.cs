@@ -33,9 +33,6 @@ namespace Mine
         {
             if (CurrentMiner == null) return;
             CurrentMiner.Move(inputReader.Move.x);
-
-            Debug.Log($"CurrentMiner: {(CurrentMiner != null ? "OK" : "NULL")}, Move.x: {inputReader.Move.x}");
-
         }
 
         private void HandleJump() => CurrentMiner?.RequestJump();

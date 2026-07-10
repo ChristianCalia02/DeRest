@@ -41,7 +41,6 @@ namespace Mine
         public void Move(float horizontal)
         {
             moveInput = Mathf.Clamp(horizontal, -1f, 1f);
-            Debug.Log($"moveInput ricevuto: {horizontal}");
         }
         public void RequestJump() => jumpRequested = true;
 

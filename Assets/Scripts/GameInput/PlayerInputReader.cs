@@ -13,6 +13,7 @@ namespace GameInput
         [SerializeField] private InputActionReference pause;
         [SerializeField] private InputActionReference debug;
         [SerializeField] private InputActionReference jump;
+        [SerializeField] private InputActionReference dig;
 
         public Vector2 Move { get; private set; }
         public Vector2 MousePosition { get; private set; }
@@ -22,6 +23,7 @@ namespace GameInput
         public event Action OnPause;
         public event Action OnDebug;
         public event Action OnJump;
+        public bool DigHeld => dig.action.IsPressed();
 
         private void OnEnable()
         {
@@ -30,6 +32,7 @@ namespace GameInput
             pause.action.Enable();
             debug.action.Enable();
             jump.action.Enable();
+            dig.action.Enable();
 
             interact.action.performed += HandleInteract;
             pause.action.performed += HandlePause;

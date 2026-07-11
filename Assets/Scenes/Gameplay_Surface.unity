@@ -799,6 +799,7 @@ MonoBehaviour:
   pause: {fileID: 3547551116697669590, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   debug: {fileID: -8279565984312921300, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jump: {fileID: -5062282275588036065, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  dig: {fileID: 2234143915943530204, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &2102243817
 MonoBehaviour:
   m_ObjectHideFlags: 0

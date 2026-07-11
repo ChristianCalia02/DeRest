@@ -8,6 +8,7 @@ namespace Core
         Vector2 Move { get; }
         Vector2 MousePosition { get; }
         bool InteractPressed { get; }
+        bool DigHeld { get; }
 
         event Action OnInteract;
         event Action OnPause;
